@@ -1,4 +1,3 @@
-Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +31,7 @@ h2{font-family:var(--serif);font-size:1.3rem;margin:38px 0 12px;font-weight:600}
 h3{font-family:var(--serif);font-size:1.05rem;margin:0 0 10px;font-weight:600}
 .sub{color:#544b45;margin:0 0 26px;font-size:1.02rem}
 .glyph{letter-spacing:.14em;font-size:1.05rem}
- 
+
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:14px 16px}
 .controls label{font-weight:600;font-size:.94rem}
@@ -46,7 +45,7 @@ button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(
 .spacer{flex:1}
 .btn-accent{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
- 
+
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
 .card{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
 .card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px}
@@ -58,13 +57,13 @@ button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(
 .card.west .date{color:var(--west)}
 .card .dow{color:var(--muted);font-size:.9rem;margin-top:5px}
 .card .calnote{font-size:.8rem;color:var(--muted);margin-top:11px;padding-top:10px;border-top:1px solid var(--hair)}
- 
+
 .gap{margin-top:16px;text-align:center;padding:15px;border-radius:var(--radius);
   background:var(--accent-soft);border:1px solid var(--accent-line);font-size:1.06rem}
 .gap strong{font-family:var(--serif);font-size:1.22rem;color:var(--accent-dark)}
 .gap.same{background:var(--green-soft);border-color:var(--green-line)}
 .gap.same strong{color:#3f5c39}
- 
+
 .cycle{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
 .col{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:18px 20px}
 .col h3{padding-bottom:9px;border-bottom:2px solid var(--line)}
@@ -77,7 +76,7 @@ button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(
 .row.key .n{color:var(--ink);font-weight:700}
 .col.east .row.key .d{color:var(--accent-dark)}
 .col.west .row.key .d{color:var(--west)}
- 
+
 .tablewrap{overflow-x:auto;border:1px solid var(--edge);border-radius:var(--radius);background:var(--card)}
 table{border-collapse:collapse;width:100%;font-size:.93rem}
 th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--hair);white-space:nowrap}
@@ -90,7 +89,7 @@ tbody tr.coincide td{font-weight:600}
 tbody tr.current{outline:2px solid var(--accent);outline-offset:-2px}
 .pill{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.78rem;font-weight:700;background:#c3b3a8;color:#3f3f3f}
 tr.coincide .pill{background:var(--green);color:#fff}
- 
+
 .prose{max-width:68ch}
 .prose p{margin:0 0 13px}
 details{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:14px 18px;margin-top:14px}
@@ -103,7 +102,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--edge);font-size:.87rem;color:#544b45}
 footer a{color:var(--accent-dark);font-weight:600}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
- 
+
 @media(max-width:680px){
   .cards,.cycle{grid-template-columns:1fr}
   .wrap{padding:20px 15px 40px}
@@ -117,13 +116,13 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 </head>
 <body>
 <div class="wrap">
- 
+
 <header>
   <div class="glyph" aria-hidden="true">&#9766;&#10084;&#65039;&#128013;</div>
   <h1>Pascha vs. Easter Date Calculator</h1>
   <p class="sub">When does Orthodox Pascha fall &mdash; and how far is it from Western Easter? Enter any year for both dates plus the full Paschal cycle.</p>
 </header>
- 
+
 <div class="controls">
   <label for="year">Year</label>
   <button class="step" id="prev" aria-label="Previous year">&minus;</button>
@@ -134,7 +133,7 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
   <button id="today" class="hide-embed">This year</button>
   <button id="ics" class="btn-accent hide-embed">Download .ics</button>
 </div>
- 
+
 <div class="cards">
   <div class="card west">
     <div class="tradition">Western &mdash; Easter Sunday</div>
@@ -149,16 +148,16 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
     <div class="calnote">Julian Paschalion, shown as a civil (Gregorian) date.</div>
   </div>
 </div>
- 
+
 <div class="gap" id="gap"></div>
- 
+
 <h2>The Paschal Cycle</h2>
 <div class="cycle">
   <div class="col west"><h3>Western / Roman</h3><div id="wCycle"></div></div>
   <div class="col east"><h3>Byzantine / Orthodox</h3><div id="eCycle"></div></div>
 </div>
 <p class="note">Byzantine pre-Lenten Sundays follow the Slavic and Ruthenian reckoning. Fixed-date feasts (Nativity, Theophany, patronal days) depend on whether a jurisdiction uses the Julian or Revised Julian calendar &mdash; this tool computes the movable cycle only.</p>
- 
+
 <h2 class="hide-embed">Upcoming Years at a Glance</h2>
 <div class="tablewrap hide-embed">
 <table>
@@ -198,7 +197,7 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
   </tbody>
 </table>
 </div>
- 
+
 <div class="hide-embed">
 <h2>Why Do the Dates Differ?</h2>
 <div class="prose">
@@ -207,29 +206,30 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 <p><strong>The moon.</strong> The Gregorian reform also corrected the tables used to predict the paschal full moon, which had drifted several days off the true astronomical moon. The Julian Paschalion retains the older nineteen-year lunar cycle.</p>
 <p>Because both always land on a Sunday, the gap between them is always a whole number of weeks &mdash; in practice zero, one, four, or five. There is a further constraint on the Orthodox side: Pascha must follow Jewish Passover, which is why the gap sometimes widens to a full month.</p>
 </div>
- 
+
 <details>
   <summary>Embed this calculator on your site</summary>
   <p class="note">Paste this snippet wherever you want the calculator to appear. It resizes itself to fit.</p>
-  <pre><code id="embedCode"></code></pre>
+  <pre><code id="embedCode">&lt;iframe src=&quot;https://boazsweetpotato.github.io/orthodoxsnake-tools/?mode=embed&quot; title=&quot;Pascha vs. Easter Date Calculator&quot; style=&quot;width:100%;border:0;height:880px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:14px;text-align:center&quot;&gt;Pascha calculator by &lt;a href=&quot;https://www.orthodoxsnake.com&quot;&gt;The Orthodox Snake Writing Agency&lt;/a&gt;&lt;/p&gt;</code></pre>
   <button id="copyEmbed">Copy embed code</button>
   <p class="note">Add <code>&amp;year=2027</code> to open on a specific year.</p>
 </details>
- 
+
 <footer>
   <p><strong>The Orthodox Snake Writing Agency</strong> &mdash; Dr. Boaz Goss<br>
   Free to use and embed. A link back to <a href="https://www.orthodoxsnake.com">orthodoxsnake.com</a> is always appreciated.</p>
   <p class="note">Valid for years 1583&ndash;4099. Verified against known Paschal dates. Always defer to your own jurisdiction&rsquo;s published calendar for liturgical planning.</p>
 </footer>
 </div>
- 
+
 </div>
 <script>
 (function(){
 "use strict";
 var MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var DOW=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
- 
+
 function gregEaster(y){
   var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,
       f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),
@@ -258,10 +258,11 @@ function fmt(dt){return MON[dt.getUTCMonth()]+" "+dt.getUTCDate()+", "+dt.getUTC
 function fmtShort(dt){return MON[dt.getUTCMonth()].slice(0,3)+" "+dt.getUTCDate();}
 function dow(dt){return DOW[dt.getUTCDay()];}
 function weeksApart(w,e){return Math.round((e-w)/604800000);}
- 
+
 var WEST=[["Ash Wednesday", -46], ["First Sunday of Lent", -42], ["Palm Sunday", -7], ["Holy Thursday", -3], ["Good Friday", -2], ["Easter Sunday", 0], ["Divine Mercy Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["Trinity Sunday", 56]];
 var EAST=[["Publican &amp; Pharisee", -70], ["Prodigal Son", -63], ["Meatfare Sunday", -56], ["Forgiveness Sunday", -49], ["Great Lent begins", -48], ["Sunday of Orthodoxy", -42], ["St Gregory Palamas", -35], ["Veneration of the Cross", -28], ["St John Climacus", -21], ["St Mary of Egypt", -14], ["Lazarus Saturday", -8], ["Palm Sunday", -7], ["Great and Holy Friday", -2], ["Pascha", 0], ["Thomas Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["All Saints", 56]];
- 
+var CREDIT="<p style=\"font-size:14px;text-align:center\">Pascha calculator by <a href=\"https://www.orthodoxsnake.com\">The Orthodox Snake Writing Agency</a></p>";
+
 function renderCycle(el,list,anchor){
   el.innerHTML=list.map(function(it){
     var key=it[1]===0;
@@ -269,7 +270,7 @@ function renderCycle(el,list,anchor){
       '</span><span class="d">'+fmtShort(shift(anchor,it[1]))+'</span></div>';
   }).join("");
 }
- 
+
 var cur=null;
 function render(y){
   if(!(y>=1583&&y<=4099))return;
@@ -289,7 +290,7 @@ function render(y){
   if(document.getElementById("year").value!=y)document.getElementById("year").value=y;
   postHeight();
 }
- 
+
 function pad(n){return n<10?"0"+n:""+n;}
 function ics(){
   var y=cur,w=gregEaster(y),e=orthPascha(y),L=[
@@ -311,13 +312,13 @@ function ics(){
   document.body.appendChild(a);a.click();document.body.removeChild(a);
   setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
 }
- 
+
 function postHeight(){
   if(window.parent!==window){
     try{window.parent.postMessage({orthodoxSnakePaschaHeight:document.documentElement.scrollHeight},"*");}catch(err){}
   }
 }
- 
+
 // wiring
 var yi=document.getElementById("year");
 yi.addEventListener("input",function(){var v=parseInt(yi.value,10);if(v>=1583&&v<=4099)render(v);});
@@ -327,12 +328,12 @@ document.getElementById("today").addEventListener("click",function(){render(new 
 document.getElementById("ics").addEventListener("click",ics);
 document.getElementById("tbody").addEventListener("click",function(ev2){
   var tr=ev2.target.closest("tr");if(tr)render(+tr.getAttribute("data-year"));});
- 
+
 var params=new URLSearchParams(location.search);
 if(params.get("mode")==="embed")document.body.classList.add("embed");
 var base=location.origin+location.pathname;
 var snippet='<iframe src="'+base+'?mode=embed" title="Pascha vs. Easter Date Calculator" '+
-  'style="width:100%;border:0;height:880px" loading="lazy"></iframe>';
+  'style="width:100%;border:0;height:880px" loading="lazy"></iframe>\n'+CREDIT;
 var ec=document.getElementById("embedCode");
 if(ec)ec.textContent=snippet;
 var cb=document.getElementById("copyEmbed");
@@ -340,7 +341,7 @@ if(cb)cb.addEventListener("click",function(){
   navigator.clipboard.writeText(snippet).then(function(){
     cb.textContent="Copied";setTimeout(function(){cb.textContent="Copy embed code";},1800);});
 });
- 
+
 var qy=parseInt(params.get("year"),10);
 render(qy>=1583&&qy<=4099?qy:new Date().getFullYear());
 window.addEventListener("load",postHeight);
@@ -348,4 +349,4 @@ window.addEventListener("load",postHeight);
 </script>
 </body>
 </html>
- 
+
