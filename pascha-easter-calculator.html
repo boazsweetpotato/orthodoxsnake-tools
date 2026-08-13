@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pascha vs. Easter Date Calculator | The Orthodox Snake</title>
+<meta name="description" content="Calculate the date of Orthodox Pascha and Western Easter for any year, see how many weeks apart they fall, and get the full Paschal cycle: Great Lent, Palm Sunday, Ascension, and Pentecost.">
+<meta name="theme-color" content="#cdbbb1">
+<meta name="author" content="Dr. Boaz Goss">
+<link rel="canonical" href="https://www.orthodoxsnake.com/pascha-calculator">
+<meta property="og:title" content="Pascha vs. Easter Date Calculator | The Orthodox Snake">
+<meta property="og:description" content="Orthodox Pascha and Western Easter for any year, with the full Paschal cycle for both traditions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.orthodoxsnake.com/pascha-calculator">
+<style>
+:root{
+  --bg:#cdbbb1; --card:#f7f3ee; --ink:#3f3f3f; --muted:#6f6a66;
+  --accent:#7100e2; --accent-soft:#ece1fb; --accent-line:#c9a3f5; --accent-dark:#5a00b4;
+  --west:#48566b; --line:#ddd0c6; --edge:#a38e80; --hair:#eae3db;
+  --green:#5d7d55; --green-soft:#dde8d9; --green-line:#bccfb6;
+  --radius:14px;
+  --serif:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:28px 20px 56px}
+h1{font-family:var(--serif);font-size:clamp(1.7rem,4.2vw,2.5rem);line-height:1.15;margin:0 0 6px;font-weight:600}
+h2{font-family:var(--serif);font-size:1.3rem;margin:38px 0 12px;font-weight:600}
+h3{font-family:var(--serif);font-size:1.05rem;margin:0 0 10px;font-weight:600}
+.sub{color:#544b45;margin:0 0 26px;font-size:1.02rem}
+.glyph{letter-spacing:.14em;font-size:1.05rem}
+
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:14px 16px}
+.controls label{font-weight:600;font-size:.94rem}
+input[type=number]{font:inherit;font-size:1.12rem;font-weight:600;width:7.2ch;padding:7px 10px;
+  border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);text-align:center}
+input[type=number]:focus-visible,button:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px}
+button{font:inherit;cursor:pointer;border-radius:9px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);padding:7px 13px;transition:background .15s,border-color .15s,color .15s}
+button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-dark)}
+.step{font-weight:700;width:2.4rem;font-size:1.1rem;line-height:1.2}
+.spacer{flex:1}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.card{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px}
+.card.west::before{background:var(--west)}
+.card.east::before{background:var(--accent)}
+.card .tradition{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.card .date{font-family:var(--serif);font-size:clamp(1.45rem,3.6vw,2rem);font-weight:600;line-height:1.15}
+.card.east .date{color:var(--accent-dark)}
+.card.west .date{color:var(--west)}
+.card .dow{color:var(--muted);font-size:.9rem;margin-top:5px}
+.card .calnote{font-size:.8rem;color:var(--muted);margin-top:11px;padding-top:10px;border-top:1px solid var(--hair)}
+
+.gap{margin-top:16px;text-align:center;padding:15px;border-radius:var(--radius);
+  background:var(--accent-soft);border:1px solid var(--accent-line);font-size:1.06rem}
+.gap strong{font-family:var(--serif);font-size:1.22rem;color:var(--accent-dark)}
+.gap.same{background:var(--green-soft);border-color:var(--green-line)}
+.gap.same strong{color:#3f5c39}
+
+.cycle{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.col{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:18px 20px}
+.col h3{padding-bottom:9px;border-bottom:2px solid var(--line)}
+.col.west h3{border-color:var(--west);color:var(--west)}
+.col.east h3{border-color:var(--accent);color:var(--accent-dark)}
+.row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:.92rem;border-bottom:1px solid var(--hair)}
+.row:last-child{border-bottom:0}
+.row .n{color:var(--muted)}
+.row .d{font-weight:600;white-space:nowrap}
+.row.key .n{color:var(--ink);font-weight:700}
+.col.east .row.key .d{color:var(--accent-dark)}
+.col.west .row.key .d{color:var(--west)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--edge);border-radius:var(--radius);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--hair);white-space:nowrap}
+th{background:#efe7dd;font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;color:#69645f;font-weight:700}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--accent-soft)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.coincide{background:var(--green-soft)}
+tbody tr.coincide td{font-weight:600}
+tbody tr.current{outline:2px solid var(--accent);outline-offset:-2px}
+.pill{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.78rem;font-weight:700;background:#c3b3a8;color:#3f3f3f}
+tr.coincide .pill{background:var(--green);color:#fff}
+
+.prose{max-width:68ch}
+.prose p{margin:0 0 13px}
+details{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:14px 18px;margin-top:14px}
+summary{cursor:pointer;font-weight:600;font-family:var(--serif);font-size:1.02rem}
+summary:hover{color:var(--accent-dark)}
+pre{background:#efe7dd;border:1px solid var(--line);border-radius:9px;padding:13px;
+  overflow-x:auto;font-size:.82rem;margin:12px 0 0;white-space:pre-wrap;word-break:break-all}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.note{font-size:.86rem;color:#544b45;margin-top:10px}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--edge);font-size:.87rem;color:#544b45}
+footer a{color:var(--accent-dark);font-weight:600}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media(max-width:680px){
+  .cards,.cycle{grid-template-columns:1fr}
+  .wrap{padding:20px 15px 40px}
+  .controls{gap:8px}
+}
+body.embed .wrap{padding:16px 14px 20px;max-width:100%}
+body.embed .hide-embed{display:none}
+body.embed h1{font-size:1.35rem}
+body.embed .sub{margin-bottom:16px;font-size:.92rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="glyph" aria-hidden="true">&#9766;&#10084;&#65039;&#128013;</div>
+  <h1>Pascha vs. Easter Date Calculator</h1>
+  <p class="sub">When does Orthodox Pascha fall &mdash; and how far is it from Western Easter? Enter any year for both dates plus the full Paschal cycle.</p>
+</header>
+
+<div class="controls">
+  <label for="year">Year</label>
+  <button class="step" id="prev" aria-label="Previous year">&minus;</button>
+  <input type="number" id="year" min="1583" max="4099" step="1" value="2026" aria-describedby="yearhelp">
+  <button class="step" id="next" aria-label="Next year">+</button>
+  <span id="yearhelp" class="sr">Enter a year between 1583 and 4099</span>
+  <span class="spacer"></span>
+  <button id="today" class="hide-embed">This year</button>
+  <button id="ics" class="btn-accent hide-embed">Download .ics</button>
+</div>
+
+<div class="cards">
+  <div class="card west">
+    <div class="tradition">Western &mdash; Easter Sunday</div>
+    <div class="date" id="wDate">&mdash;</div>
+    <div class="dow" id="wDow"></div>
+    <div class="calnote">Gregorian computus. Roman Catholic and most Protestant churches.</div>
+  </div>
+  <div class="card east">
+    <div class="tradition">Orthodox &mdash; Holy Pascha</div>
+    <div class="date" id="eDate">&mdash;</div>
+    <div class="dow" id="eDow"></div>
+    <div class="calnote">Julian Paschalion, shown as a civil (Gregorian) date.</div>
+  </div>
+</div>
+
+<div class="gap" id="gap"></div>
+
+<h2>The Paschal Cycle</h2>
+<div class="cycle">
+  <div class="col west"><h3>Western / Roman</h3><div id="wCycle"></div></div>
+  <div class="col east"><h3>Byzantine / Orthodox</h3><div id="eCycle"></div></div>
+</div>
+<p class="note">Byzantine pre-Lenten Sundays follow the Slavic and Ruthenian reckoning. Fixed-date feasts (Nativity, Theophany, patronal days) depend on whether a jurisdiction uses the Julian or Revised Julian calendar &mdash; this tool computes the movable cycle only.</p>
+
+<h2 class="hide-embed">Upcoming Years at a Glance</h2>
+<div class="tablewrap hide-embed">
+<table>
+  <caption class="sr">Western Easter and Orthodox Pascha dates by year</caption>
+  <thead><tr><th scope="col">Year</th><th scope="col">Western Easter</th><th scope="col">Orthodox Pascha</th><th scope="col">Difference</th></tr></thead>
+  <tbody id="tbody">
+    <tr data-year="2026"><td>2026</td><td>Apr 5</td><td>Apr 12</td><td>1 week</td></tr>
+    <tr data-year="2027"><td>2027</td><td>Mar 28</td><td>May 2</td><td>5 weeks</td></tr>
+    <tr data-year="2028" class="coincide"><td>2028</td><td>Apr 16</td><td>Apr 16</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2029"><td>2029</td><td>Apr 1</td><td>Apr 8</td><td>1 week</td></tr>
+    <tr data-year="2030"><td>2030</td><td>Apr 21</td><td>Apr 28</td><td>1 week</td></tr>
+    <tr data-year="2031" class="coincide"><td>2031</td><td>Apr 13</td><td>Apr 13</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2032"><td>2032</td><td>Mar 28</td><td>May 2</td><td>5 weeks</td></tr>
+    <tr data-year="2033"><td>2033</td><td>Apr 17</td><td>Apr 24</td><td>1 week</td></tr>
+    <tr data-year="2034" class="coincide"><td>2034</td><td>Apr 9</td><td>Apr 9</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2035"><td>2035</td><td>Mar 25</td><td>Apr 29</td><td>5 weeks</td></tr>
+    <tr data-year="2036"><td>2036</td><td>Apr 13</td><td>Apr 20</td><td>1 week</td></tr>
+    <tr data-year="2037" class="coincide"><td>2037</td><td>Apr 5</td><td>Apr 5</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2038" class="coincide"><td>2038</td><td>Apr 25</td><td>Apr 25</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2039"><td>2039</td><td>Apr 10</td><td>Apr 17</td><td>1 week</td></tr>
+    <tr data-year="2040"><td>2040</td><td>Apr 1</td><td>May 6</td><td>5 weeks</td></tr>
+    <tr data-year="2041" class="coincide"><td>2041</td><td>Apr 21</td><td>Apr 21</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2042"><td>2042</td><td>Apr 6</td><td>Apr 13</td><td>1 week</td></tr>
+    <tr data-year="2043"><td>2043</td><td>Mar 29</td><td>May 3</td><td>5 weeks</td></tr>
+    <tr data-year="2044"><td>2044</td><td>Apr 17</td><td>Apr 24</td><td>1 week</td></tr>
+    <tr data-year="2045" class="coincide"><td>2045</td><td>Apr 9</td><td>Apr 9</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2046"><td>2046</td><td>Mar 25</td><td>Apr 29</td><td>5 weeks</td></tr>
+    <tr data-year="2047"><td>2047</td><td>Apr 14</td><td>Apr 21</td><td>1 week</td></tr>
+    <tr data-year="2048" class="coincide"><td>2048</td><td>Apr 5</td><td>Apr 5</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2049"><td>2049</td><td>Apr 18</td><td>Apr 25</td><td>1 week</td></tr>
+    <tr data-year="2050"><td>2050</td><td>Apr 10</td><td>Apr 17</td><td>1 week</td></tr>
+    <tr data-year="2051"><td>2051</td><td>Apr 2</td><td>May 7</td><td>5 weeks</td></tr>
+    <tr data-year="2052" class="coincide"><td>2052</td><td>Apr 21</td><td>Apr 21</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2053"><td>2053</td><td>Apr 6</td><td>Apr 13</td><td>1 week</td></tr>
+    <tr data-year="2054"><td>2054</td><td>Mar 29</td><td>May 3</td><td>5 weeks</td></tr>
+    <tr data-year="2055" class="coincide"><td>2055</td><td>Apr 18</td><td>Apr 18</td><td><span class="pill">Same day</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="hide-embed">
+<h2>Why Do the Dates Differ?</h2>
+<div class="prose">
+<p>Both traditions follow the same rule inherited from the First Council of Nicaea in 325: Pascha falls on the first Sunday after the first full moon on or after the vernal equinox. They diverge on two points of reckoning, not on the rule itself.</p>
+<p><strong>The calendar.</strong> The Western computus reckons from the Gregorian calendar, adopted in 1582. Most Orthodox churches reckon the Paschalion from the older Julian calendar, which now runs thirteen days behind. So the Julian &ldquo;March 21&rdquo; equinox anchor actually falls on April 3 by civil reckoning.</p>
+<p><strong>The moon.</strong> The Gregorian reform also corrected the tables used to predict the paschal full moon, which had drifted several days off the true astronomical moon. The Julian Paschalion retains the older nineteen-year lunar cycle.</p>
+<p>Because both always land on a Sunday, the gap between them is always a whole number of weeks &mdash; in practice zero, one, four, or five. There is a further constraint on the Orthodox side: Pascha must follow Jewish Passover, which is why the gap sometimes widens to a full month.</p>
+</div>
+
+<details>
+  <summary>Embed this calculator on your site</summary>
+  <p class="note">Paste this snippet wherever you want the calculator to appear. It resizes itself to fit.</p>
+  <pre><code id="embedCode"></code></pre>
+  <button id="copyEmbed">Copy embed code</button>
+  <p class="note">Add <code>&amp;year=2027</code> to open on a specific year.</p>
+</details>
+
+<footer>
+  <p><strong>The Orthodox Snake Writing Agency</strong> &mdash; Dr. Boaz Goss<br>
+  Free to use and embed. A link back to <a href="https://www.orthodoxsnake.com">orthodoxsnake.com</a> is always appreciated.</p>
+  <p class="note">Valid for years 1583&ndash;4099. Verified against known Paschal dates. Always defer to your own jurisdiction&rsquo;s published calendar for liturgical planning.</p>
+</footer>
+</div>
+
+</div>
+<script>
+(function(){
+"use strict";
+var MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var DOW=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+function gregEaster(y){
+  var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,
+      f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),
+      h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,
+      l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),
+      t=h+l-7*m+114;
+  return new Date(Date.UTC(y,Math.floor(t/31)-1,(t%31)+1));
+}
+function julEasterParts(y){
+  var a=y%4,b=y%7,c=y%19,d=(19*c+15)%30,e=(2*a+4*b-d+34)%7,t=d+e+114;
+  return {m:Math.floor(t/31),d:(t%31)+1};
+}
+function julToJDN(Y,M,D){
+  var a=Math.floor((14-M)/12),y=Y+4800-a,m=M+12*a-3;
+  return D+Math.floor((153*m+2)/5)+365*y+Math.floor(y/4)-32083;
+}
+function jdnToDate(j){
+  var a=j+32044,b=Math.floor((4*a+3)/146097),c=a-Math.floor(146097*b/4),
+      d=Math.floor((4*c+3)/1461),e=c-Math.floor(1461*d/4),m=Math.floor((5*e+2)/153);
+  return new Date(Date.UTC(100*b+d-4800+Math.floor(m/10),
+    m+3-12*Math.floor(m/10)-1, e-Math.floor((153*m+2)/5)+1));
+}
+function orthPascha(y){var p=julEasterParts(y);return jdnToDate(julToJDN(y,p.m,p.d));}
+function shift(dt,n){return new Date(dt.getTime()+n*86400000);}
+function fmt(dt){return MON[dt.getUTCMonth()]+" "+dt.getUTCDate()+", "+dt.getUTCFullYear();}
+function fmtShort(dt){return MON[dt.getUTCMonth()].slice(0,3)+" "+dt.getUTCDate();}
+function dow(dt){return DOW[dt.getUTCDay()];}
+function weeksApart(w,e){return Math.round((e-w)/604800000);}
+
+var WEST=[["Ash Wednesday",-46],["First Sunday of Lent",-42],["Palm Sunday",-7],
+  ["Holy Thursday",-3],["Good Friday",-2],["EASTER SUNDAY",0],["Divine Mercy Sunday",7],
+  ["Ascension",39],["Pentecost",49],["Trinity Sunday",56]];
+var EAST=[["Publican &amp; Pharisee",-70],["Prodigal Son",-63],["Meatfare Sunday",-56],
+  ["Forgiveness Sunday",-49],["Great Lent begins",-48],["Sunday of Orthodoxy",-42],
+  ["Veneration of the Cross",-28],["Lazarus Saturday",-8],["Palm Sunday",-7],
+  ["Great and Holy Friday",-2],["PASCHA",0],["Thomas Sunday",7],["Ascension",39],
+  ["Pentecost",49],["All Saints",56]];
+
+function renderCycle(el,list,anchor){
+  el.innerHTML=list.map(function(it){
+    var key=it[1]===0;
+    return '<div class="row'+(key?' key':'')+'"><span class="n">'+it[0]+
+      '</span><span class="d">'+fmtShort(shift(anchor,it[1]))+'</span></div>';
+  }).join("");
+}
+
+var cur=null;
+function render(y){
+  if(!(y>=1583&&y<=4099))return;
+  cur=y;
+  var w=gregEaster(y),e=orthPascha(y),k=weeksApart(w,e);
+  document.getElementById("wDate").textContent=fmt(w);
+  document.getElementById("wDow").textContent=dow(w);
+  document.getElementById("eDate").textContent=fmt(e);
+  document.getElementById("eDow").textContent=dow(e);
+  var g=document.getElementById("gap");
+  if(k===0){g.className="gap same";g.innerHTML="<strong>They fall on the same day in "+y+".</strong> Both traditions celebrate together.";}
+  else{g.className="gap";g.innerHTML="<strong>"+k+" week"+(k>1?"s":"")+" apart</strong> &mdash; Pascha falls "+(k*7)+" days after Easter in "+y+".";}
+  renderCycle(document.getElementById("wCycle"),WEST,w);
+  renderCycle(document.getElementById("eCycle"),EAST,e);
+  Array.prototype.forEach.call(document.querySelectorAll("#tbody tr"),function(tr){
+    tr.classList.toggle("current",+tr.getAttribute("data-year")===y);});
+  if(document.getElementById("year").value!=y)document.getElementById("year").value=y;
+  postHeight();
+}
+
+function pad(n){return n<10?"0"+n:""+n;}
+function ics(){
+  var y=cur,w=gregEaster(y),e=orthPascha(y),L=[
+    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//The Orthodox Snake//Pascha Calculator//EN","CALSCALE:GREGORIAN"];
+  function ev(dt,title,uid){
+    var s=dt.getUTCFullYear()+pad(dt.getUTCMonth()+1)+pad(dt.getUTCDate()),
+        n=shift(dt,1),en=n.getUTCFullYear()+pad(n.getUTCMonth()+1)+pad(n.getUTCDate());
+    L.push("BEGIN:VEVENT","UID:"+uid+"-"+y+"@orthodoxsnake.com","DTSTAMP:"+s+"T000000Z",
+      "DTSTART;VALUE=DATE:"+s,"DTEND;VALUE=DATE:"+en,"SUMMARY:"+title,"TRANSP:TRANSPARENT","END:VEVENT");
+  }
+  ev(w,"Easter Sunday (Western)","easter");
+  ev(e,"Holy Pascha (Orthodox)","pascha");
+  WEST.forEach(function(it,i){if(it[1]!==0)ev(shift(w,it[1]),it[0].replace(/&amp;/g,"&")+" (Western)","w"+i);});
+  EAST.forEach(function(it,i){if(it[1]!==0)ev(shift(e,it[1]),it[0].replace(/&amp;/g,"&")+" (Orthodox)","e"+i);});
+  L.push("END:VCALENDAR");
+  var blob=new Blob([L.join("\r\n")],{type:"text/calendar;charset=utf-8"}),
+      a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download="pascha-easter-"+y+".ics";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+}
+
+function postHeight(){
+  if(window.parent!==window){
+    try{window.parent.postMessage({orthodoxSnakePaschaHeight:document.documentElement.scrollHeight},"*");}catch(err){}
+  }
+}
+
+// wiring
+var yi=document.getElementById("year");
+yi.addEventListener("input",function(){var v=parseInt(yi.value,10);if(v>=1583&&v<=4099)render(v);});
+document.getElementById("prev").addEventListener("click",function(){render(cur-1);});
+document.getElementById("next").addEventListener("click",function(){render(cur+1);});
+document.getElementById("today").addEventListener("click",function(){render(new Date().getFullYear());});
+document.getElementById("ics").addEventListener("click",ics);
+document.getElementById("tbody").addEventListener("click",function(ev2){
+  var tr=ev2.target.closest("tr");if(tr)render(+tr.getAttribute("data-year"));});
+
+var params=new URLSearchParams(location.search);
+if(params.get("mode")==="embed")document.body.classList.add("embed");
+var base=location.origin+location.pathname;
+var snippet='<iframe src="'+base+'?mode=embed" title="Pascha vs. Easter Date Calculator" '+
+  'style="width:100%;border:0;height:760px" loading="lazy"></iframe>';
+var ec=document.getElementById("embedCode");
+if(ec)ec.textContent=snippet;
+var cb=document.getElementById("copyEmbed");
+if(cb)cb.addEventListener("click",function(){
+  navigator.clipboard.writeText(snippet).then(function(){
+    cb.textContent="Copied";setTimeout(function(){cb.textContent="Copy embed code";},1800);});
+});
+
+var qy=parseInt(params.get("year"),10);
+render(qy>=1583&&qy<=4099?qy:new Date().getFullYear());
+window.addEventListener("load",postHeight);
+})();
+</script>
+</body>
+</html>
