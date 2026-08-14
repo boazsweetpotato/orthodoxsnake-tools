@@ -64,7 +64,7 @@ button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(
 .gap.same{background:var(--green-soft);border-color:var(--green-line)}
 .gap.same strong{color:#3f5c39}
 
-.cycle{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.cycle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
 .col{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:18px 20px}
 .col h3{padding-bottom:9px;border-bottom:2px solid var(--line)}
 .col.west h3{border-color:var(--west);color:var(--west)}
@@ -103,8 +103,11 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--edge);font-si
 footer a{color:var(--accent-dark);font-weight:600}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+@media(max-width:900px){
+  .cycle{grid-template-columns:1fr}
+}
 @media(max-width:680px){
-  .cards,.cycle{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
   .wrap{padding:20px 15px 40px}
   .controls{gap:8px}
 }
@@ -136,16 +139,16 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 
 <div class="cards">
   <div class="card west">
-    <div class="tradition">Western &mdash; Easter Sunday</div>
+    <div class="tradition">Gregorian</div>
     <div class="date" id="wDate">&mdash;</div>
     <div class="dow" id="wDow"></div>
-    <div class="calnote">Gregorian computus. Roman Catholic and most Protestant churches.</div>
+    <div class="calnote">Roman Catholic Easter. Also Pascha for most Byzantine Catholics in the U.S.</div>
   </div>
   <div class="card east">
-    <div class="tradition">Orthodox &mdash; Holy Pascha</div>
+    <div class="tradition">Julian</div>
     <div class="date" id="eDate">&mdash;</div>
     <div class="dow" id="eDow"></div>
-    <div class="calnote">Julian Paschalion, shown as a civil (Gregorian) date.</div>
+    <div class="calnote">Orthodox Holy Pascha. Also used by some Byzantine Catholic jurisdictions, including much of Ukraine.</div>
   </div>
 </div>
 
@@ -153,10 +156,11 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 
 <h2>The Paschal Cycle</h2>
 <div class="cycle">
-  <div class="col west"><h3>Western / Roman</h3><div id="wCycle"></div></div>
-  <div class="col east"><h3>Byzantine / Orthodox</h3><div id="eCycle"></div></div>
+  <div class="col west"><h3>Roman Catholic</h3><div id="wCycle"></div></div>
+  <div class="col east"><h3>Byzantine &mdash; Gregorian</h3><div id="bCycle"></div></div>
+  <div class="col east"><h3>Byzantine &mdash; Julian (Orthodox)</h3><div id="eCycle"></div></div>
 </div>
-<p class="note">Byzantine pre-Lenten Sundays follow the Slavic and Ruthenian reckoning. Fixed-date feasts (Nativity, Theophany, patronal days) depend on whether a jurisdiction uses the Julian or Revised Julian calendar &mdash; this tool computes the movable cycle only.</p>
+<p class="note">Byzantine pre-Lenten Sundays follow the Slavic and Ruthenian reckoning, shown here on both possible anchors: most Byzantine Catholic parishes in the U.S. use the Gregorian date, while some jurisdictions &mdash; including much of Ukraine &mdash; use the Julian Paschalion instead. Fixed-date feasts (Nativity, Theophany, patronal days) add a further layer of jurisdictional variance not modeled here. Always confirm your own parish&rsquo;s practice.</p>
 
 <h2 class="hide-embed">Upcoming Years at a Glance</h2>
 <div class="tablewrap hide-embed">
@@ -201,10 +205,11 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 <div class="hide-embed">
 <h2>Why Do the Dates Differ?</h2>
 <div class="prose">
-<p>Both traditions follow the same rule inherited from the First Council of Nicaea in 325: Pascha falls on the first Sunday after the first full moon on or after the vernal equinox. They diverge on two points of reckoning, not on the rule itself.</p>
-<p><strong>The calendar.</strong> The Western computus reckons from the Gregorian calendar, adopted in 1582. Most Orthodox churches reckon the Paschalion from the older Julian calendar, which now runs thirteen days behind. So the Julian &ldquo;March 21&rdquo; equinox anchor actually falls on April 3 by civil reckoning.</p>
+<p>All three columns follow the same rule inherited from the First Council of Nicaea in 325: Pascha falls on the first Sunday after the first full moon on or after the vernal equinox. They diverge on two points of reckoning, not on the rule itself.</p>
+<p><strong>The calendar.</strong> Roman Catholics, and most Byzantine Catholics in the U.S., reckon from the Gregorian calendar, adopted in 1582. Most Orthodox churches &mdash; and some Eastern Catholic jurisdictions &mdash; reckon the Paschalion from the older Julian calendar, which now runs thirteen days behind. So the Julian &ldquo;March 21&rdquo; equinox anchor actually falls on April 3 by civil reckoning.</p>
 <p><strong>The moon.</strong> The Gregorian reform also corrected the tables used to predict the paschal full moon, which had drifted several days off the true astronomical moon. The Julian Paschalion retains the older nineteen-year lunar cycle.</p>
-<p>Because both always land on a Sunday, the gap between them is always a whole number of weeks &mdash; in practice zero, one, four, or five. There is a further constraint on the Orthodox side: Pascha must follow Jewish Passover, which is why the gap sometimes widens to a full month.</p>
+<p><strong>Byzantine Catholics fall on both sides.</strong> The movable cycle itself &mdash; pre-Lenten Sundays, Great Lent, Bright Week &mdash; is identical either way; only the anchor date changes. Most Byzantine Catholic parishes in the United States use the Gregorian date; parishes on the Julian calendar, including much of Ukraine, use the other.</p>
+<p>Because all three always land on a Sunday, the gap between any two is always a whole number of weeks &mdash; in practice zero, one, four, or five. There is a further constraint on the Julian side: Pascha must follow Jewish Passover, which is why the gap sometimes widens to a full month.</p>
 </div>
 
 <details>
@@ -260,7 +265,7 @@ function dow(dt){return DOW[dt.getUTCDay()];}
 function weeksApart(w,e){return Math.round((e-w)/604800000);}
 
 var WEST=[["Ash Wednesday", -46], ["First Sunday of Lent", -42], ["Palm Sunday", -7], ["Holy Thursday", -3], ["Good Friday", -2], ["Easter Sunday", 0], ["Divine Mercy Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["Trinity Sunday", 56]];
-var EAST=[["Publican &amp; Pharisee", -70], ["Prodigal Son", -63], ["Meatfare Sunday", -56], ["Forgiveness Sunday", -49], ["Great Lent begins", -48], ["Sunday of Orthodoxy", -42], ["St Gregory Palamas", -35], ["Veneration of the Cross", -28], ["St John Climacus", -21], ["St Mary of Egypt", -14], ["Lazarus Saturday", -8], ["Palm Sunday", -7], ["Great and Holy Friday", -2], ["Pascha", 0], ["Thomas Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["All Saints", 56]];
+var EAST=[["Zacchaeus Sunday", -77], ["Publican &amp; Pharisee", -70], ["Prodigal Son", -63], ["Meatfare Sunday", -56], ["Forgiveness Sunday", -49], ["Great Lent begins", -48], ["Sunday of Orthodoxy", -42], ["St Gregory Palamas", -35], ["Veneration of the Cross", -28], ["St John Climacus", -21], ["St Mary of Egypt", -14], ["Lazarus Saturday", -8], ["Palm Sunday", -7], ["Great and Holy Friday", -2], ["Pascha", 0], ["Thomas Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["All Saints", 56]];
 var CREDIT="<p style=\"font-size:14px;text-align:center\">Pascha calculator by <a href=\"https://www.orthodoxsnake.com\">The Orthodox Snake Writing Agency</a></p>";
 
 function renderCycle(el,list,anchor){
@@ -284,6 +289,7 @@ function render(y){
   if(k===0){g.className="gap same";g.innerHTML="<strong>They fall on the same day in "+y+".</strong> Both traditions celebrate together.";}
   else{g.className="gap";g.innerHTML="<strong>"+k+" week"+(k>1?"s":"")+" apart</strong> &mdash; Pascha falls "+(k*7)+" days after Easter in "+y+".";}
   renderCycle(document.getElementById("wCycle"),WEST,w);
+  renderCycle(document.getElementById("bCycle"),EAST,w);
   renderCycle(document.getElementById("eCycle"),EAST,e);
   Array.prototype.forEach.call(document.querySelectorAll("#tbody tr"),function(tr){
     tr.classList.toggle("current",+tr.getAttribute("data-year")===y);});
@@ -303,8 +309,9 @@ function ics(){
   }
   ev(w,"Easter Sunday (Western)","easter");
   ev(e,"Holy Pascha (Orthodox)","pascha");
-  WEST.forEach(function(it,i){if(it[1]!==0)ev(shift(w,it[1]),it[0].replace(/&amp;/g,"&")+" (Western)","w"+i);});
-  EAST.forEach(function(it,i){if(it[1]!==0)ev(shift(e,it[1]),it[0].replace(/&amp;/g,"&")+" (Orthodox)","e"+i);});
+  WEST.forEach(function(it,i){if(it[1]!==0)ev(shift(w,it[1]),it[0].replace(/&amp;/g,"&")+" (Roman)","w"+i);});
+  EAST.forEach(function(it,i){if(it[1]!==0)ev(shift(w,it[1]),it[0].replace(/&amp;/g,"&")+" (Byzantine, Gregorian)","b"+i);});
+  EAST.forEach(function(it,i){if(it[1]!==0)ev(shift(e,it[1]),it[0].replace(/&amp;/g,"&")+" (Byzantine, Julian)","e"+i);});
   L.push("END:VCALENDAR");
   var blob=new Blob([L.join("\r\n")],{type:"text/calendar;charset=utf-8"}),
       a=document.createElement("a");
