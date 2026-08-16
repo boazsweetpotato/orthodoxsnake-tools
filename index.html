@@ -45,6 +45,13 @@ button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(
 .spacer{flex:1}
 .btn-accent{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn-accent:disabled{background:#fff;border-color:var(--line);color:var(--muted);cursor:not-allowed}
+
+.ics-toggles{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.ics-toggles .tg{display:flex;align-items:center;gap:4px;font-size:.82rem;font-weight:600;
+  color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
+.ics-toggles .tg input{margin:0;width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
+.ics-toggles .tg.w input{accent-color:var(--west)}
 
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
 .card{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
@@ -134,6 +141,11 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
   <span id="yearhelp" class="sr">Enter a year between 1583 and 4099</span>
   <span class="spacer"></span>
   <button id="today" class="hide-embed">This year</button>
+  <div class="ics-toggles hide-embed" role="group" aria-label="Calendars to include in the download">
+    <label class="tg w"><input type="checkbox" id="incRoman" checked> Roman</label>
+    <label class="tg e"><input type="checkbox" id="incByzGreg" checked> Byz.&ndash;Greg.</label>
+    <label class="tg e"><input type="checkbox" id="incByzJul" checked> Byz.&ndash;Julian</label>
+  </div>
   <button id="ics" class="btn-accent hide-embed">Download .ics</button>
 </div>
 
@@ -297,6 +309,30 @@ function render(y){
   postHeight();
 }
 
+var incRoman=document.getElementById("incRoman"),
+    incByzGreg=document.getElementById("incByzGreg"),
+    incByzJul=document.getElementById("incByzJul"),
+    icsBtn=document.getElementById("ics");
+var ICS_PREF_KEY="osPaschaIcsPrefs";
+function loadIcsPrefs(){
+  try{
+    var p=JSON.parse(localStorage.getItem(ICS_PREF_KEY));
+    if(!p)return;
+    if(typeof p.roman==="boolean")incRoman.checked=p.roman;
+    if(typeof p.byzGreg==="boolean")incByzGreg.checked=p.byzGreg;
+    if(typeof p.byzJul==="boolean")incByzJul.checked=p.byzJul;
+  }catch(err){}
+}
+function saveIcsPrefs(){
+  try{
+    localStorage.setItem(ICS_PREF_KEY,JSON.stringify(
+      {roman:incRoman.checked,byzGreg:incByzGreg.checked,byzJul:incByzJul.checked}));
+  }catch(err){}
+}
+function updateIcsButton(){
+  icsBtn.disabled=!(incRoman.checked||incByzGreg.checked||incByzJul.checked);
+}
+
 function pad(n){return n<10?"0"+n:""+n;}
 function ics(){
   var y=cur,w=gregEaster(y),e=orthPascha(y),L=[
@@ -307,11 +343,18 @@ function ics(){
     L.push("BEGIN:VEVENT","UID:"+uid+"-"+y+"@orthodoxsnake.com","DTSTAMP:"+s+"T000000Z",
       "DTSTART;VALUE=DATE:"+s,"DTEND;VALUE=DATE:"+en,"SUMMARY:"+title,"TRANSP:TRANSPARENT","END:VEVENT");
   }
-  ev(w,"Easter Sunday (Western)","easter");
-  ev(e,"Holy Pascha (Orthodox)","pascha");
-  WEST.forEach(function(it,i){if(it[1]!==0)ev(shift(w,it[1]),it[0].replace(/&amp;/g,"&")+" (Roman)","w"+i);});
-  EAST.forEach(function(it,i){if(it[1]!==0)ev(shift(w,it[1]),it[0].replace(/&amp;/g,"&")+" (Byzantine, Gregorian)","b"+i);});
-  EAST.forEach(function(it,i){if(it[1]!==0)ev(shift(e,it[1]),it[0].replace(/&amp;/g,"&")+" (Byzantine, Julian)","e"+i);});
+  var groups=[
+    [incRoman,WEST,w," (Roman)","w"],
+    [incByzGreg,EAST,w," (Byzantine, Gregorian)","b"],
+    [incByzJul,EAST,e," (Byzantine, Julian)","e"]
+  ];
+  var any=false;
+  groups.forEach(function(g){
+    if(!g[0].checked)return;
+    any=true;
+    g[1].forEach(function(it,i){ev(shift(g[2],it[1]),it[0].replace(/&amp;/g,"&")+g[3],g[4]+i);});
+  });
+  if(!any)return;
   L.push("END:VCALENDAR");
   var blob=new Blob([L.join("\r\n")],{type:"text/calendar;charset=utf-8"}),
       a=document.createElement("a");
@@ -332,7 +375,12 @@ yi.addEventListener("input",function(){var v=parseInt(yi.value,10);if(v>=1583&&v
 document.getElementById("prev").addEventListener("click",function(){render(cur-1);});
 document.getElementById("next").addEventListener("click",function(){render(cur+1);});
 document.getElementById("today").addEventListener("click",function(){render(new Date().getFullYear());});
-document.getElementById("ics").addEventListener("click",ics);
+icsBtn.addEventListener("click",ics);
+[incRoman,incByzGreg,incByzJul].forEach(function(box){
+  box.addEventListener("change",function(){saveIcsPrefs();updateIcsButton();});
+});
+loadIcsPrefs();
+updateIcsButton();
 document.getElementById("tbody").addEventListener("click",function(ev2){
   var tr=ev2.target.closest("tr");if(tr)render(+tr.getAttribute("data-year"));});
 
