@@ -3,10 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Roman Catholic, Ruthenian Byzantine Catholic, and Orthodox (Julian reckoning) Mass and Divine Liturgy readings and commemorations, side by side for any date -- computed in your browser, sourced from published Lectionaries, Typika, Menaia, and Martyrologies.">
 <link rel="canonical" href="https://www.orthodoxsnake.com/kalendarium">
 <title>The Triptikon Kalendarium</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Triptikon Kalendarium">
+<meta property="og:description" content="Roman Catholic, Ruthenian Byzantine Catholic, and Orthodox (Julian reckoning) Mass and Divine Liturgy readings and commemorations, side by side for any date -- computed in your browser, sourced from published Lectionaries, Typika, Menaia, and Martyrologies.">
+<meta property="og:url" content="https://www.orthodoxsnake.com/kalendarium">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","@id":"https://www.orthodoxsnake.com/kalendarium#app","name":"The Triptikon Kalendarium","alternateName":"Unified Lectionary Comparator","url":"https://www.orthodoxsnake.com/kalendarium","description":"Roman Catholic, Ruthenian Byzantine Catholic, and Orthodox (Julian reckoning) Mass and Divine Liturgy readings and commemorations, side by side for any date -- computed in your browser, sourced from published Lectionaries, Typika, Menaia, and Martyrologies.","applicationCategory":"ReferenceApplication","operatingSystem":"Any modern web browser","browserRequirements":"JavaScript is required to compute and display a given date's readings and commemorations.","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","author":{"@type":"Person","name":"Dr. Boaz Goss"},"publisher":{"@type":"Organization","name":"The Orthodox Snake Writing Agency","url":"https://www.orthodoxsnake.com"},"featureList":["Roman Catholic Mass readings for any date","Ruthenian Byzantine Catholic Divine Liturgy readings for any date","Orthodox (Julian reckoning) Divine Liturgy readings for any date","Daily commemorations for all three traditions, cross-referenced","Free to embed on other websites"],"about":[{"@type":"Thing","name":"Lectionary"},{"@type":"Thing","name":"Roman Rite"},{"@type":"Thing","name":"Byzantine Rite"},{"@type":"Thing","name":"Liturgical calendar"}]}</script>
 </head>
 <body>
+<noscript><p style="max-width:640px;margin:40px auto;padding:0 16px;font-family:Georgia,serif;text-align:center">Roman Catholic, Ruthenian Byzantine Catholic, and Orthodox (Julian reckoning) Mass and Divine Liturgy readings and commemorations, side by side for any date -- computed in your browser, sourced from published Lectionaries, Typika, Menaia, and Martyrologies. This page needs JavaScript enabled to compute and display a given date’s readings. <a href="https://www.orthodoxsnake.com/kalendarium">https://www.orthodoxsnake.com/kalendarium</a></p></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -294,6 +302,8 @@
   }
   .triptych-tool footer.page .sources { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.02em; }
   .triptych-tool footer.page .legend { margin-top: 10px; }
+  .triptych-tool footer.page .accuracy-note { margin-top: 14px; font-style: italic; }
+  .triptych-tool footer.page .accuracy-note a { color: var(--gold); }
 
   .triptych-tool .consulted {
     max-width: 720px;
@@ -431,6 +441,10 @@
       <div class="legend">&dagger; commemoration lists: for Roman entries,
       a bare name plus a number refers to that day's numbered entry in
       the 2004 Roman Martyrology.</div>
+      <div class="accuracy-note">We're striving for 100% accuracy across all
+      three traditions. If you notice an error, please contact us at
+      <a href="mailto:boaz@orthodoxsnake.com">boaz@orthodoxsnake.com</a> so
+      we can patch it ASAP.</div>
     </footer>
 
     <section class="consulted">
@@ -511,9 +525,11 @@
 <pre class="share-code">&lt;iframe src=&quot;https://tools.orthodoxsnake.com/kalendarium/&quot; title=&quot;The Triptikon Kalendarium&quot; style=&quot;width:100%;border:0;height:1400px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
 &lt;p style=&quot;font-size:14px;text-align:center&quot;&gt;The Triptikon Kalendarium by &lt;a href=&quot;https://www.orthodoxsnake.com&quot;&gt;The Orthodox Snake Writing Agency&lt;/a&gt;&lt;/p&gt;</pre>
 <button type="button" class="share-btn share-copy">Copy embed code</button>
-<p class="share-ask">The snippet includes a small credit line. Please keep it &mdash;
-a link back to <a href="https://www.orthodoxsnake.com">orthodoxsnake.com</a> is
-the only thing we ask in return.</p>
+<p class="share-ask">The iframe snippet includes a small credit line and loads
+the full page, Works Consulted bibliography included &mdash; please keep both
+intact rather than cropping the iframe or copying out just the readings. The
+credit line and the sources listed below are the only things we ask in
+return.</p>
 </div>
   </div>
 </div>
