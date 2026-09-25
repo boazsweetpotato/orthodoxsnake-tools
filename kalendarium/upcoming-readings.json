@@ -1,213 +1,9 @@
 {
-  "generated_at": "2026-09-25T00:36:40.011Z",
+  "generated_at": "2026-09-25T00:40:45.270Z",
   "generated_by": "The Triptikon Kalendarium (tools.orthodoxsnake.com/kalendarium/)",
   "source_url": "https://tools.orthodoxsnake.com/kalendarium/",
   "note": "Free to use. Please credit The Orthodox Snake Writing Agency (https://www.orthodoxsnake.com) if you build something with this.",
   "days": [
-    {
-      "date": "2026-09-24",
-      "weekday": "Thursday",
-      "roman": {
-        "feast": "Thursday of the 25th Week in Ordinary Time",
-        "rank": "Feria",
-        "service": "Weekday Mass",
-        "readings": [
-          {
-            "section": null,
-            "kind": "1st rdg",
-            "citation": "Eccl/Qoh 1:2-11"
-          },
-          {
-            "section": null,
-            "kind": "psalm",
-            "citation": "Ps 90:3-4, 5-6, 12-13, 14+17bc"
-          },
-          {
-            "section": null,
-            "kind": "alleluia",
-            "citation": "John 14:6"
-          },
-          {
-            "section": null,
-            "kind": "gospel",
-            "citation": "Luke 9:7-9"
-          }
-        ],
-        "extra_feasts": [],
-        "commemorations": [
-          {
-            "name": "Anatolius",
-            "entry_num": "1",
-            "companions": []
-          },
-          {
-            "name": "Andochius",
-            "entry_num": "2",
-            "companions": []
-          },
-          {
-            "name": "Rusticus",
-            "entry_num": "3",
-            "companions": []
-          },
-          {
-            "name": "Lupus",
-            "entry_num": "4",
-            "companions": []
-          },
-          {
-            "name": "Isarnus",
-            "entry_num": "5",
-            "companions": []
-          },
-          {
-            "name": "Gerardi Sagredo",
-            "entry_num": "6",
-            "companions": []
-          },
-          {
-            "name": "Emericus",
-            "entry_num": "6",
-            "companions": []
-          },
-          {
-            "name": "Stephanus",
-            "entry_num": "6",
-            "companions": []
-          },
-          {
-            "name": "Dalmatii Moner",
-            "entry_num": "7",
-            "companions": []
-          },
-          {
-            "name": "Gulielmi Spenser",
-            "entry_num": "8",
-            "companions": []
-          },
-          {
-            "name": "Antonius Gonzalez",
-            "entry_num": "9",
-            "companions": []
-          },
-          {
-            "name": "Pacifici Severino",
-            "entry_num": "10",
-            "companions": []
-          },
-          {
-            "name": "Antonii Martini Slomšek",
-            "entry_num": "11",
-            "companions": []
-          },
-          {
-            "name": "Columbae Ioannae Gabriel",
-            "entry_num": "12",
-            "companions": []
-          },
-          {
-            "name": "Iosephus Raymundus Paschalis Ferrer",
-            "entry_num": "13",
-            "companions": []
-          },
-          {
-            "name": "Iosephi Mariae Ferrandiz Hernandez",
-            "entry_num": "14",
-            "companions": []
-          },
-          {
-            "name": "Iosephi Raymundi Ferragud Girbes",
-            "entry_num": "16",
-            "companions": []
-          }
-        ]
-      },
-      "ruthenian": {
-        "feast": "Thursday of the 18th Week after Pentecost",
-        "rank": "Tone 8",
-        "service": "Divine Liturgy",
-        "readings": [
-          {
-            "section": null,
-            "kind": "epistle",
-            "citation": "Eph 5:33, 6:1-9"
-          },
-          {
-            "section": null,
-            "kind": "gospel",
-            "citation": "Luke 4:16-22"
-          }
-        ],
-        "extra_feasts": [],
-        "commemorations": [
-          {
-            "name": "Thecla, Equal-to-the-Apostles",
-            "entry_num": null,
-            "companions": []
-          }
-        ]
-      },
-      "orthodox": {
-        "feast": "Thursday of the 16th Week after Pentecost",
-        "rank": "Tone 7",
-        "service": "Divine Liturgy",
-        "readings": [
-          {
-            "section": null,
-            "kind": "epistle",
-            "citation": "Eph 1:1-9"
-          },
-          {
-            "section": null,
-            "kind": "gospel",
-            "citation": "Mark 7:24-30"
-          }
-        ],
-        "extra_feasts": [],
-        "commemorations": [
-          {
-            "name": "Afterfeast of the Nativity of the Mother of God",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Venerable Theodora of Alexandria",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Translation of the Relics of Venerable Sergius and Herman, Wonderworkers of Valaam",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Martyrs Demetrius, his wife Euanthia, and their son Demetrian, at Skepsis on the Hellespont",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Martyrs Diodorus, Didymus, and Diomedes, of Laodicea",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Martyr Ia and 9,000 Martyrs with her, of Persia",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Saint Euphrosynos the Cook of Alexandria",
-            "entry_num": null,
-            "companions": []
-          },
-          {
-            "name": "Kazan - Kaplunovka Icon of the Mother of God (1689)",
-            "entry_num": null,
-            "companions": []
-          }
-        ]
-      }
-    },
     {
       "date": "2026-09-25",
       "weekday": "Friday",
@@ -12273,6 +12069,215 @@
           },
           {
             "name": "Onesiphórus and Porphýrius of Ephesus",
+            "entry_num": null,
+            "companions": []
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-11-23",
+      "weekday": "Monday",
+      "roman": {
+        "feast": "Monday of the 34th Week in Ordinary Time",
+        "rank": "Feria",
+        "service": "Weekday Mass",
+        "readings": [
+          {
+            "section": null,
+            "kind": "1st rdg",
+            "citation": "Rev 14:1-3, 4b-5"
+          },
+          {
+            "section": null,
+            "kind": "psalm",
+            "citation": "Ps 24:1bc-2, 3-4ab, 5-6"
+          },
+          {
+            "section": null,
+            "kind": "alleluia",
+            "citation": "Matt 24:42a, 44"
+          },
+          {
+            "section": null,
+            "kind": "gospel",
+            "citation": "Luke 21:1-4"
+          }
+        ],
+        "extra_feasts": [],
+        "commemorations": [
+          {
+            "name": "Saint Clement I, Pope and Martyr/Saint Columban, Religious",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Clemens Primus",
+            "entry_num": "1",
+            "companions": []
+          },
+          {
+            "name": "Columbanus",
+            "entry_num": "1",
+            "companions": []
+          },
+          {
+            "name": "Felicitas",
+            "entry_num": "3",
+            "companions": []
+          },
+          {
+            "name": "Mustiola",
+            "entry_num": "4",
+            "companions": []
+          },
+          {
+            "name": "Sisinnius",
+            "entry_num": "5",
+            "companions": []
+          },
+          {
+            "name": "Lucretia",
+            "entry_num": "7",
+            "companions": []
+          },
+          {
+            "name": "Amphilochius",
+            "entry_num": "8",
+            "companions": []
+          },
+          {
+            "name": "Basilius",
+            "entry_num": "8",
+            "companions": []
+          },
+          {
+            "name": "Gregorius Nazianzenus",
+            "entry_num": "8",
+            "companions": []
+          },
+          {
+            "name": "Severinus",
+            "entry_num": "9",
+            "companions": []
+          },
+          {
+            "name": "Trudonis",
+            "entry_num": "11",
+            "companions": []
+          },
+          {
+            "name": "Margarita Sabaudia",
+            "entry_num": "12",
+            "companions": []
+          },
+          {
+            "name": "Caecilia Yu So-sa",
+            "entry_num": "13",
+            "companions": []
+          },
+          {
+            "name": "Michaelis Augustini Pro",
+            "entry_num": "14",
+            "companions": []
+          },
+          {
+            "name": "Maria",
+            "entry_num": "15",
+            "companions": []
+          }
+        ]
+      },
+      "ruthenian": {
+        "feast": "Monday of the 27th Week after Pentecost",
+        "rank": "Tone 1",
+        "service": "Divine Liturgy",
+        "readings": [
+          {
+            "section": null,
+            "kind": "gospel",
+            "citation": "Luke 17:20-25"
+          }
+        ],
+        "extra_feasts": [],
+        "commemorations": [
+          {
+            "name": "Postfestive day of the Entrance",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Our holy fathers Amphilocius, bishop of Iconium",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Amphilochius, Bishop of Iconium",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Gregory, Bishop of Agrigentum",
+            "entry_num": null,
+            "companions": []
+          }
+        ]
+      },
+      "orthodox": {
+        "feast": "Monday of the 25th Week after Pentecost",
+        "rank": "Tone 8",
+        "service": "Divine Liturgy",
+        "readings": [
+          {
+            "section": null,
+            "kind": "epistle",
+            "citation": "2 Thess 1:1-10"
+          },
+          {
+            "section": null,
+            "kind": "gospel",
+            "citation": "Luke 12:13-15, 22-31"
+          }
+        ],
+        "extra_feasts": [],
+        "commemorations": [
+          {
+            "name": "Apostles of the Seventy: Erastus, Olympas, Herodion, Sosipater, Quartus, and Tertius",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Martyr Orestes, Physician of Cappadocia",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Hieromartyr Mίlos (or Milēs) the Wonderworker, and two disciples",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Venerable Theocteristus, Abbot of Symbola on Mount Olympus, Bithynia",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Martyr Constantine, King of Georgia",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Martyrdom of the Great-martyr George of Georgia",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Founding of the Church of Saint George",
+            "entry_num": null,
+            "companions": []
+          },
+          {
+            "name": "Erastus, Olympas, Rodion of the Seventy, and those with them",
             "entry_num": null,
             "companions": []
           }
