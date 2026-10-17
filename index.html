@@ -46,6 +46,13 @@ button{font:inherit;cursor:pointer;border-radius:9px;border:1px solid var(--line
   background:#fff;color:var(--ink);padding:7px 13px;transition:background .15s,border-color .15s,color .15s}
 button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-dark)}
 .step{font-weight:700;width:2.4rem;font-size:1.1rem;line-height:1.2}
+button:disabled{cursor:not-allowed;color:var(--muted);background:#f1ece6}
+button:disabled:hover{background:#f1ece6;border-color:var(--line);color:var(--muted)}
+.yearmsg{flex-basis:100%;margin:2px 0 0;font-size:.88rem;font-weight:600;color:#8a1c1c}
+input[aria-invalid=true]{border-color:#8a1c1c}
+button.yearbtn{font:inherit;font-weight:inherit;padding:0;border:0;background:none;color:inherit;
+  text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer;border-radius:4px}
+button.yearbtn:hover{background:none;color:var(--accent-dark);text-decoration-style:solid}
 .spacer{flex:1}
 .btn-accent{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
@@ -140,7 +147,7 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 <div class="controls">
   <label for="year">Year</label>
   <button class="step" id="prev" aria-label="Previous year">&minus;</button>
-  <input type="number" id="year" min="1583" max="4099" step="1" value="2026" aria-describedby="yearhelp">
+  <input type="number" id="year" min="1583" max="4099" step="1" value="2026" aria-describedby="yearhelp yearmsg">
   <button class="step" id="next" aria-label="Next year">+</button>
   <span id="yearhelp" class="sr">Enter a year between 1583 and 4099</span>
   <span class="spacer"></span>
@@ -151,7 +158,9 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
     <label class="tg e"><input type="checkbox" id="incByzJul" checked> Byz.&ndash;Julian</label>
   </div>
   <button id="ics" class="btn-accent hide-embed">Download .ics</button>
+  <p id="yearmsg" class="yearmsg" role="alert" hidden></p>
 </div>
+<div id="announce" class="sr" role="status" aria-live="polite"></div>
 
 <div class="cards">
   <div class="card west">
@@ -184,36 +193,36 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
   <caption class="sr">Western Easter and Orthodox Pascha dates by year</caption>
   <thead><tr><th scope="col">Year</th><th scope="col">Western Easter</th><th scope="col">Orthodox Pascha</th><th scope="col">Difference</th></tr></thead>
   <tbody id="tbody">
-    <tr data-year="2026"><td>2026</td><td>Apr 5</td><td>Apr 12</td><td>1 week</td></tr>
-    <tr data-year="2027"><td>2027</td><td>Mar 28</td><td>May 2</td><td>5 weeks</td></tr>
-    <tr data-year="2028" class="coincide"><td>2028</td><td>Apr 16</td><td>Apr 16</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2029"><td>2029</td><td>Apr 1</td><td>Apr 8</td><td>1 week</td></tr>
-    <tr data-year="2030"><td>2030</td><td>Apr 21</td><td>Apr 28</td><td>1 week</td></tr>
-    <tr data-year="2031" class="coincide"><td>2031</td><td>Apr 13</td><td>Apr 13</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2032"><td>2032</td><td>Mar 28</td><td>May 2</td><td>5 weeks</td></tr>
-    <tr data-year="2033"><td>2033</td><td>Apr 17</td><td>Apr 24</td><td>1 week</td></tr>
-    <tr data-year="2034" class="coincide"><td>2034</td><td>Apr 9</td><td>Apr 9</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2035"><td>2035</td><td>Mar 25</td><td>Apr 29</td><td>5 weeks</td></tr>
-    <tr data-year="2036"><td>2036</td><td>Apr 13</td><td>Apr 20</td><td>1 week</td></tr>
-    <tr data-year="2037" class="coincide"><td>2037</td><td>Apr 5</td><td>Apr 5</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2038" class="coincide"><td>2038</td><td>Apr 25</td><td>Apr 25</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2039"><td>2039</td><td>Apr 10</td><td>Apr 17</td><td>1 week</td></tr>
-    <tr data-year="2040"><td>2040</td><td>Apr 1</td><td>May 6</td><td>5 weeks</td></tr>
-    <tr data-year="2041" class="coincide"><td>2041</td><td>Apr 21</td><td>Apr 21</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2042"><td>2042</td><td>Apr 6</td><td>Apr 13</td><td>1 week</td></tr>
-    <tr data-year="2043"><td>2043</td><td>Mar 29</td><td>May 3</td><td>5 weeks</td></tr>
-    <tr data-year="2044"><td>2044</td><td>Apr 17</td><td>Apr 24</td><td>1 week</td></tr>
-    <tr data-year="2045" class="coincide"><td>2045</td><td>Apr 9</td><td>Apr 9</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2046"><td>2046</td><td>Mar 25</td><td>Apr 29</td><td>5 weeks</td></tr>
-    <tr data-year="2047"><td>2047</td><td>Apr 14</td><td>Apr 21</td><td>1 week</td></tr>
-    <tr data-year="2048" class="coincide"><td>2048</td><td>Apr 5</td><td>Apr 5</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2049"><td>2049</td><td>Apr 18</td><td>Apr 25</td><td>1 week</td></tr>
-    <tr data-year="2050"><td>2050</td><td>Apr 10</td><td>Apr 17</td><td>1 week</td></tr>
-    <tr data-year="2051"><td>2051</td><td>Apr 2</td><td>May 7</td><td>5 weeks</td></tr>
-    <tr data-year="2052" class="coincide"><td>2052</td><td>Apr 21</td><td>Apr 21</td><td><span class="pill">Same day</span></td></tr>
-    <tr data-year="2053"><td>2053</td><td>Apr 6</td><td>Apr 13</td><td>1 week</td></tr>
-    <tr data-year="2054"><td>2054</td><td>Mar 29</td><td>May 3</td><td>5 weeks</td></tr>
-    <tr data-year="2055" class="coincide"><td>2055</td><td>Apr 18</td><td>Apr 18</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2026"><td><button type="button" class="yearbtn" aria-label="Show 2026">2026</button></td><td>Apr 5</td><td>Apr 12</td><td>1 week</td></tr>
+    <tr data-year="2027"><td><button type="button" class="yearbtn" aria-label="Show 2027">2027</button></td><td>Mar 28</td><td>May 2</td><td>5 weeks</td></tr>
+    <tr data-year="2028" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2028">2028</button></td><td>Apr 16</td><td>Apr 16</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2029"><td><button type="button" class="yearbtn" aria-label="Show 2029">2029</button></td><td>Apr 1</td><td>Apr 8</td><td>1 week</td></tr>
+    <tr data-year="2030"><td><button type="button" class="yearbtn" aria-label="Show 2030">2030</button></td><td>Apr 21</td><td>Apr 28</td><td>1 week</td></tr>
+    <tr data-year="2031" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2031">2031</button></td><td>Apr 13</td><td>Apr 13</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2032"><td><button type="button" class="yearbtn" aria-label="Show 2032">2032</button></td><td>Mar 28</td><td>May 2</td><td>5 weeks</td></tr>
+    <tr data-year="2033"><td><button type="button" class="yearbtn" aria-label="Show 2033">2033</button></td><td>Apr 17</td><td>Apr 24</td><td>1 week</td></tr>
+    <tr data-year="2034" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2034">2034</button></td><td>Apr 9</td><td>Apr 9</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2035"><td><button type="button" class="yearbtn" aria-label="Show 2035">2035</button></td><td>Mar 25</td><td>Apr 29</td><td>5 weeks</td></tr>
+    <tr data-year="2036"><td><button type="button" class="yearbtn" aria-label="Show 2036">2036</button></td><td>Apr 13</td><td>Apr 20</td><td>1 week</td></tr>
+    <tr data-year="2037" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2037">2037</button></td><td>Apr 5</td><td>Apr 5</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2038" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2038">2038</button></td><td>Apr 25</td><td>Apr 25</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2039"><td><button type="button" class="yearbtn" aria-label="Show 2039">2039</button></td><td>Apr 10</td><td>Apr 17</td><td>1 week</td></tr>
+    <tr data-year="2040"><td><button type="button" class="yearbtn" aria-label="Show 2040">2040</button></td><td>Apr 1</td><td>May 6</td><td>5 weeks</td></tr>
+    <tr data-year="2041" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2041">2041</button></td><td>Apr 21</td><td>Apr 21</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2042"><td><button type="button" class="yearbtn" aria-label="Show 2042">2042</button></td><td>Apr 6</td><td>Apr 13</td><td>1 week</td></tr>
+    <tr data-year="2043"><td><button type="button" class="yearbtn" aria-label="Show 2043">2043</button></td><td>Mar 29</td><td>May 3</td><td>5 weeks</td></tr>
+    <tr data-year="2044"><td><button type="button" class="yearbtn" aria-label="Show 2044">2044</button></td><td>Apr 17</td><td>Apr 24</td><td>1 week</td></tr>
+    <tr data-year="2045" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2045">2045</button></td><td>Apr 9</td><td>Apr 9</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2046"><td><button type="button" class="yearbtn" aria-label="Show 2046">2046</button></td><td>Mar 25</td><td>Apr 29</td><td>5 weeks</td></tr>
+    <tr data-year="2047"><td><button type="button" class="yearbtn" aria-label="Show 2047">2047</button></td><td>Apr 14</td><td>Apr 21</td><td>1 week</td></tr>
+    <tr data-year="2048" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2048">2048</button></td><td>Apr 5</td><td>Apr 5</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2049"><td><button type="button" class="yearbtn" aria-label="Show 2049">2049</button></td><td>Apr 18</td><td>Apr 25</td><td>1 week</td></tr>
+    <tr data-year="2050"><td><button type="button" class="yearbtn" aria-label="Show 2050">2050</button></td><td>Apr 10</td><td>Apr 17</td><td>1 week</td></tr>
+    <tr data-year="2051"><td><button type="button" class="yearbtn" aria-label="Show 2051">2051</button></td><td>Apr 2</td><td>May 7</td><td>5 weeks</td></tr>
+    <tr data-year="2052" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2052">2052</button></td><td>Apr 21</td><td>Apr 21</td><td><span class="pill">Same day</span></td></tr>
+    <tr data-year="2053"><td><button type="button" class="yearbtn" aria-label="Show 2053">2053</button></td><td>Apr 6</td><td>Apr 13</td><td>1 week</td></tr>
+    <tr data-year="2054"><td><button type="button" class="yearbtn" aria-label="Show 2054">2054</button></td><td>Mar 29</td><td>May 3</td><td>5 weeks</td></tr>
+    <tr data-year="2055" class="coincide"><td><button type="button" class="yearbtn" aria-label="Show 2055">2055</button></td><td>Apr 18</td><td>Apr 18</td><td><span class="pill">Same day</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -294,10 +303,19 @@ function renderCycle(el,list,anchor){
   }).join("");
 }
 
-var cur=null;
+var cur=null,announceReady=false;
+function setYearMsg(text,invalid){
+  var m=document.getElementById("yearmsg"),i=document.getElementById("year");
+  m.textContent=text;m.hidden=!text;
+  if(invalid)i.setAttribute("aria-invalid","true");else i.removeAttribute("aria-invalid");
+  postHeight();
+}
 function render(y){
   if(!(y>=1583&&y<=4099))return;
   cur=y;
+  setYearMsg("");
+  document.getElementById("prev").disabled=y<=1583;
+  document.getElementById("next").disabled=y>=4099;
   var w=gregEaster(y),e=orthPascha(y),k=weeksApart(w,e);
   document.getElementById("wDate").textContent=fmt(w);
   document.getElementById("wDow").textContent=dow(w);
@@ -310,7 +328,13 @@ function render(y){
   renderCycle(document.getElementById("bCycle"),EAST,w);
   renderCycle(document.getElementById("eCycle"),EAST,e);
   Array.prototype.forEach.call(document.querySelectorAll("#tbody tr"),function(tr){
-    tr.classList.toggle("current",+tr.getAttribute("data-year")===y);});
+    var on=+tr.getAttribute("data-year")===y,b=tr.querySelector(".yearbtn");
+    tr.classList.toggle("current",on);
+    if(b){if(on)b.setAttribute("aria-current","true");else b.removeAttribute("aria-current");}});
+  // Screen-reader summary, only after the first (page-load) render so the
+  // page does not announce itself on arrival.
+  if(announceReady)document.getElementById("announce").textContent=y+": Western Easter "+fmt(w)+
+    ", Orthodox Pascha "+fmt(e)+", "+(k===0?"the same day":k+" week"+(k>1?"s":"")+" apart")+".";
   if(document.getElementById("year").value!=y)document.getElementById("year").value=y;
   postHeight();
 }
@@ -383,7 +407,23 @@ function postHeight(){
 
 // wiring
 var yi=document.getElementById("year");
-yi.addEventListener("input",function(){var v=parseInt(yi.value,10);if(v>=1583&&v<=4099)render(v);});
+// A valid year renders at once. Partial typing ("20" on the way to "2027") stays
+// quiet; an out-of-range year gets a message as soon as it has four digits, and
+// leaving the field (or Enter) reverts the box to the year actually shown.
+function readYear(){
+  var raw=yi.value;if(raw==="")return null;
+  var v=Number(raw);
+  return(isFinite(v)&&Math.floor(v)===v&&v>=1583&&v<=4099)?v:null;
+}
+function onYear(commit){
+  var v=readYear();
+  if(v!==null){render(v);return;}
+  if(!commit&&yi.value.length<4)return;
+  setYearMsg("Please enter a whole year from 1583 to 4099. Still showing "+cur+".",!commit);
+  if(commit)yi.value=cur;
+}
+yi.addEventListener("input",function(){onYear(false);});
+yi.addEventListener("change",function(){onYear(true);});
 document.getElementById("prev").addEventListener("click",function(){render(cur-1);});
 document.getElementById("next").addEventListener("click",function(){render(cur+1);});
 document.getElementById("today").addEventListener("click",function(){render(new Date().getFullYear());});
@@ -410,6 +450,7 @@ if(cb)cb.addEventListener("click",function(){
 
 var qy=parseInt(params.get("year"),10);
 render(qy>=1583&&qy<=4099?qy:new Date().getFullYear());
+announceReady=true;
 window.addEventListener("load",postHeight);
 window.addEventListener("resize",postHeight);
 })();
