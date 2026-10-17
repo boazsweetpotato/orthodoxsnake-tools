@@ -433,8 +433,18 @@ icsBtn.addEventListener("click",ics);
 });
 loadIcsPrefs();
 updateIcsButton();
+// The results sit above the table, so a mouse click on a year would otherwise
+// change things off-screen. Scroll up to them -- but only for pointer clicks
+// (detail>0): a keyboard Enter/Space (detail 0) keeps focus and position, and
+// screen-reader users get the live-region announcement instead.
 document.getElementById("tbody").addEventListener("click",function(ev2){
-  var tr=ev2.target.closest("tr");if(tr)render(+tr.getAttribute("data-year"));});
+  var tr=ev2.target.closest("tr");if(!tr)return;
+  render(+tr.getAttribute("data-year"));
+  if(ev2.detail>0){
+    var calm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelector(".controls").scrollIntoView({behavior:calm?"auto":"smooth",block:"start"});
+  }
+});
 
 var params=new URLSearchParams(location.search);
 if(params.get("mode")==="embed")document.body.classList.add("embed");
