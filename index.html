@@ -231,7 +231,8 @@ body.embed .sub{margin-bottom:16px;font-size:.92rem}
 <details>
   <summary>Embed this calculator on your site</summary>
   <p class="note">Paste this snippet wherever you want the calculator to appear. It resizes itself to fit.</p>
-  <pre><code id="embedCode">&lt;iframe src=&quot;https://tools.orthodoxsnake.com/?mode=embed&quot; title=&quot;Pascha vs. Easter Date Calculator&quot; style=&quot;width:100%;border:0;height:880px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+  <pre><code id="embedCode">&lt;iframe id=&quot;os-pascha-frame&quot; src=&quot;https://tools.orthodoxsnake.com/?mode=embed&quot; title=&quot;Pascha vs. Easter Date Calculator&quot; style=&quot;width:100%;border:0;height:1450px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;window.addEventListener(&quot;message&quot;,function(e){var f=document.getElementById(&quot;os-pascha-frame&quot;);if(f&amp;&amp;e.source===f.contentWindow&amp;&amp;e.data&amp;&amp;e.data.orthodoxSnakePaschaHeight)f.style.height=e.data.orthodoxSnakePaschaHeight+&quot;px&quot;;});&lt;/script&gt;
 &lt;p style=&quot;font-size:14px;text-align:center&quot;&gt;Pascha calculator by &lt;a href=&quot;https://www.orthodoxsnake.com&quot;&gt;The Orthodox Snake Writing Agency&lt;/a&gt;&lt;/p&gt;</code></pre>
   <button id="copyEmbed">Copy embed code</button>
   <p class="note">Add <code>&amp;year=2027</code> to open on a specific year.</p>
@@ -282,7 +283,7 @@ function weeksApart(w,e){return Math.round((e-w)/604800000);}
 
 var WEST=[["Ash Wednesday", -46], ["First Sunday of Lent", -42], ["Palm Sunday", -7], ["Holy Thursday", -3], ["Good Friday", -2], ["Easter Sunday", 0], ["Divine Mercy Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["Trinity Sunday", 56]];
 var EAST=[["Zacchaeus Sunday", -77], ["Publican &amp; Pharisee", -70], ["Prodigal Son", -63], ["Meatfare Sunday", -56], ["Forgiveness Sunday", -49], ["Great Lent begins", -48], ["Sunday of Orthodoxy", -42], ["St Gregory Palamas", -35], ["Veneration of the Cross", -28], ["St John Climacus", -21], ["St Mary of Egypt", -14], ["Lazarus Saturday", -8], ["Palm Sunday", -7], ["Great and Holy Friday", -2], ["Pascha", 0], ["Thomas Sunday", 7], ["Ascension", 39], ["Pentecost", 49], ["All Saints", 56]];
-var CREDIT="<p style=\"font-size:14px;text-align:center\">Pascha calculator by <a href=\"https://www.orthodoxsnake.com\">The Orthodox Snake Writing Agency</a></p>";
+var SNIPPET_TPL="<iframe id=\"os-pascha-frame\" src=\"@@URL@@?mode=embed\" title=\"Pascha vs. Easter Date Calculator\" style=\"width:100%;border:0;height:1450px\" loading=\"lazy\"><\/iframe>\n<script>window.addEventListener(\"message\",function(e){var f=document.getElementById(\"os-pascha-frame\");if(f&&e.source===f.contentWindow&&e.data&&e.data.orthodoxSnakePaschaHeight)f.style.height=e.data.orthodoxSnakePaschaHeight+\"px\";});<\/script>\n<p style=\"font-size:14px;text-align:center\">Pascha calculator by <a href=\"https://www.orthodoxsnake.com\">The Orthodox Snake Writing Agency<\/a><\/p>";
 
 function renderCycle(el,list,anchor){
   el.innerHTML=list.map(function(it){
@@ -367,10 +368,16 @@ function ics(){
   setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
 }
 
+// Measures the content (.wrap), not documentElement.scrollHeight: the latter
+// is never smaller than the iframe's own viewport, so the frame could grow
+// but never shrink back (e.g. after the host page widens it).
+var lastPosted=0;
 function postHeight(){
-  if(window.parent!==window){
-    try{window.parent.postMessage({orthodoxSnakePaschaHeight:document.documentElement.scrollHeight},"*");}catch(err){}
-  }
+  if(window.parent===window)return;
+  var h=Math.ceil(document.querySelector(".wrap").getBoundingClientRect().height);
+  if(h===lastPosted)return;
+  lastPosted=h;
+  try{window.parent.postMessage({orthodoxSnakePaschaHeight:h},"*");}catch(err){}
 }
 
 // wiring
@@ -391,8 +398,7 @@ document.getElementById("tbody").addEventListener("click",function(ev2){
 var params=new URLSearchParams(location.search);
 if(params.get("mode")==="embed")document.body.classList.add("embed");
 var base=location.origin+location.pathname;
-var snippet='<iframe src="'+base+'?mode=embed" title="Pascha vs. Easter Date Calculator" '+
-  'style="width:100%;border:0;height:880px" loading="lazy"></iframe>\n'+CREDIT;
+var snippet=SNIPPET_TPL.replace("@@URL@@",base);
 var ec=document.getElementById("embedCode");
 if(ec)ec.textContent=snippet;
 var cb=document.getElementById("copyEmbed");
@@ -404,6 +410,7 @@ if(cb)cb.addEventListener("click",function(){
 var qy=parseInt(params.get("year"),10);
 render(qy>=1583&&qy<=4099?qy:new Date().getFullYear());
 window.addEventListener("load",postHeight);
+window.addEventListener("resize",postHeight);
 })();
 </script>
 </body>
